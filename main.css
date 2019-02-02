@@ -11,12 +11,13 @@ body{
 }
 
 .right{
-    width: 35%;
+    width: 25%;
+    padding: 15px;
     float: right;
 }
 .left{
     padding: 15px;
-    width: 55%;
+    width: 65%;
     float:left;
 }
 
@@ -89,7 +90,7 @@ body{
 }
 
 .second-column{
-    width: 33.5%!important;
+    width: 37.5%!important;
     position: relative;
     display: inline-block;
     padding-left: 1rem;
@@ -140,7 +141,7 @@ body{
 
 .third-column{
 display: inline-block;
-padding-left: 1rem;
+padding-left: 2.22rem;
 padding-right: 1rem;
 vertical-align: top;
 text-align: right;
@@ -174,4 +175,53 @@ padding-bottom: 0!important;
     border-radius: .4em;
     line-height: 1em;
     text-align: center;
+}
+
+.right-title{
+    top: 0;
+    bottom: 0;
+    width:100%;
+    border-radius: 0;
+    margin-top: 1em;
+    width: auto;
+    box-shadow: none;
+    border: none;
+}
+
+h3{
+    margin-top: 1em;
+}
+
+.second-title{
+   border-top: 1px solid rgba(34,36,38,.15);
+}
+
+.empty{
+    width: auto;
+    height: auto;
+    padding-top: 10px;
+}
+
+.product-item {
+    background-color: #E8E8E8;
+    display: inline-block;
+    padding: 5px;
+    margin-top: 0.4em;
+    border-radius: 5px;
+    margin-right: 0.6em;
+}
+
+.circular-amount{
+    background-color: #F2711C!important;
+    border-color: #F2711C!important;
+    color: #FFF!important;
+    display: inline-block;
+    margin: auto;
+    font-weight: 700;
+    height: 10px;
+    width:10px;
+    padding: .4em!important;
+    line-height: 0.7;
+    text-align: center;
+    border-radius: 250rem;
 }
