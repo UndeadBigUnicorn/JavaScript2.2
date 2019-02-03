@@ -146,4 +146,17 @@ window.onload = function() {
         }
     }
 
+    function GetProductList(){
+        $.get({
+			url: "/allProducts",
+			contentType: "application/json",
+			data: '',
+			success: function (response) {
+                productList=response;
+                RenderProductList();
+			   }
+		});
+    }
+    
+    GetProductList();
 }
