@@ -3,7 +3,7 @@ const app = express();
 const jsonParser = express.json();
 const path = require("path");
 const db =  require('./dbworker.js');
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -49,6 +49,6 @@ app.delete('/deleteProduct', jsonParser, (req,res)=>{
     
 })
 
-app.listen(port, ()=>{
+app.listen(PORT, ()=>{
     console.log("Server is running");
 });
