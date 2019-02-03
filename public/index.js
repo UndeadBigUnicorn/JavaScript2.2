@@ -30,17 +30,7 @@ window.onload = function() {
         document.getElementById('input').value='';
       });
 
-      function RenderNotBoughtItems(){
-          
-        let displayNotBoughtItems = notBoughtItems.map((item)=>{
-              return (`<span class="product-item">
-              ${item.name}
-              <span class="circular-amount">${item.amount}</span>
-      </span>`);
-          });
-
-        notBoughtItemsContainer.innerHTML=displayNotBoughtItems.join(' ');  
-      }
+     
 
       $(document).on('click' , '.button-buy', function(){
         // Еще нужно добалять в список купленых товаров и с кнопоками разобраться
@@ -58,5 +48,33 @@ window.onload = function() {
             <button class="button-buy button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено</button>
         </div>
     </div>`;
+        
+        boughtItems.push({id:_id, amount:_amount, name:_name});
+        RenderBoughtItems();
     });
+
+
+    function RenderNotBoughtItems(){
+          
+        let displayNotBoughtItems = notBoughtItems.map((item)=>{
+              return (`<span class="product-item">
+              ${item.name}
+              <span class="circular-amount">${item.amount}</span>
+      </span>`);
+          });
+
+        notBoughtItemsContainer.innerHTML=displayNotBoughtItems.join(' ');  
+      }
+
+      function RenderBoughtItems(){
+          
+        let displayBoughtItems = boughtItems.map((item)=>{
+              return (`<span class="product-item crossed">
+              ${item.name}
+              <span class="circular-amount crossed">${item.amount}</span>
+      </span>`);
+          });
+
+        boughtItemsContainer.innerHTML=displayBoughtItems.join(' ');  
+      }
 }
