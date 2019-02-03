@@ -44,7 +44,7 @@ window.onload = function() {
             <span class="amount">${_amount}</span>
         </div>
         <div class="third-column option-buttons">
-            <button class="button-buy button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено</button>
+            <button class="button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено</button>
         </div>`;
         
         notBoughtItems = notBoughtItems.filter(item => item.name!=_name);
@@ -54,13 +54,11 @@ window.onload = function() {
     });
     
     $(document).on('click' , '.button-not-bought', function(){
+
         let _id = $(this).data('product-id');
-        // let _amount= $(this).closest('.item').find('.amount')[0].innerHTML;
-        let _amount = $(this).data('product-amount');
+        let _amount= $(this).closest('.item').find('.amount')[0].innerHTML;
         let _name = $(this).data('product-name');
-        console.log($(this).closest())
-        console.log($(this).closest('.item'));
-        $(this).parents('.item')[0].innerHTML= `
+        $(this).closest('.item')[0].innerHTML= `
         <div class="first-column titles">
             <span class="title">${_name}</span>
         </div>
@@ -75,6 +73,7 @@ window.onload = function() {
         </div>`;
         
         boughtItems = boughtItems.filter(item => item.name!=_name);
+        RenderBoughtItems();
         notBoughtItems.push({id:_id, amount:_amount, name:_name});
         RenderNotBoughtItems();
     });
@@ -103,4 +102,5 @@ window.onload = function() {
 
         boughtItemsContainer.innerHTML=displayBoughtItems.join(' ');  
     }
+
 }

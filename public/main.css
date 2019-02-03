@@ -166,6 +166,23 @@ padding-bottom: 0!important;
     color: rgba(0,0,0,.87);
 }
 
+.button-not-bought{
+    border: none;
+    display: inline-block;
+    min-height: 1em;
+    vertical-align: middle;
+    margin: 0 .25em 0 0;
+    padding: 1em 2em 1.15em;
+    text-shadow: none;
+    line-height: 1em;
+    text-align: center;
+    border-radius: .4em;
+    font-weight: 700;
+    /* background-color: rgb(10, 194, 102); */
+     background-color: rgba(151, 158, 155, 0.376);
+    color: rgba(0,0,0,.87);
+}
+
 .delete-button{
     background-color: #DB2828;
     color: #FFF;
