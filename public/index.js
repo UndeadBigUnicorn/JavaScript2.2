@@ -14,13 +14,13 @@ window.onload = function() {
 			contentType: "application/json",
 			data: JSON.stringify({name:productName}),
 			success: function (response) {
-                let _id = response.id;
+                let _id = response._id;
                 let _amount = response.amount;
                 let _name = response.name;
-                productList.push({id: _id, name: _name, amount: _amount});
+                productList.push({_id: _id, name: _name, amount: _amount});
                 RenderProductList();
         
-                notBoughtItems.push({id:_id,name: _name, amount: _amount});
+                notBoughtItems.push({_id:_id,name: _name, amount: _amount});
                 RenderNotBoughtItems();
         
                 document.getElementById('input').value='';
@@ -66,7 +66,7 @@ window.onload = function() {
         
         notBoughtItems = notBoughtItems.filter(item => item._id!=_id);
         RenderNotBoughtItems();
-        boughtItems.push({id:_id, amount:_amount, name:_name});
+        boughtItems.push({_id:_id, amount:_amount, name:_name});
         RenderBoughtItems();
     });
     
@@ -90,7 +90,7 @@ window.onload = function() {
         
         boughtItems = boughtItems.filter(item => item._id!=_id);
         RenderBoughtItems();
-        notBoughtItems.push({id:_id, amount:_amount, name:_name});
+        notBoughtItems.push({_id:_id, amount:_amount, name:_name});
         RenderNotBoughtItems();
     });
 

@@ -7,25 +7,24 @@ mongoose.connect("mongodb://localhost:27017/productsdb", { useNewUrlParser: true
     if(err) return console.log(err);
 });
 
-module.exports.saveToDb = (_name)=>{
+module.exports.saveToDb = (_name, callback)=>{
     let product = new Product({name: _name});   
     product.save((err,doc)=> {
         if(err) return console.log(err);
-        console.log(doc);
-        return doc;
+        callback(doc);
         });
 };
 
-module.exports.getAllFromDb = ()=>{
+module.exports.getAllFromDb = (callback)=>{
     Product.find((err,doc)=> {
         if(err)  return console.log(err);
-        return doc;
+        callback(doc);
    });
 };
 
-module.exports.deleteFromDb = (_id)=>{
+module.exports.deleteFromDb = (_id, callback)=>{
     Product.deleteOne({ _id: _id }, (err)=> {
         if (err) return console.log(err);
-
+        callback();
       });
 }
