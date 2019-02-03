@@ -14,9 +14,9 @@ window.onload = function() {
             <span class="title">${productName}</span>
         </div>
         <div class="second-column add-buttons">
-            <button class="circular-button red-button"><b>-</b></button>
+            <button class="decrement circular-button red-button"><b>-</b></button>
             <span class="amount">1</span>
-            <button class="circular-button green-button"><b>+</b></button>
+            <button class="increment circular-button green-button"><b>+</b></button>
         </div>
         <div class="third-column option-buttons">
             <button class="button-buy" data-product-name="${productName}" data-product-id="" data-product-amount="1">Куплено</button>
@@ -30,7 +30,21 @@ window.onload = function() {
         document.getElementById('input').value='';
       });
 
-     
+      $(document).on('click' , '.increment', function(){
+        console.log($(this).closest('.second-column').find('.amount')[0]); 
+        let _amount= $(this).closest('.second-column').find('.amount')[0];
+        let amount = Number(_amount.innerHTML);
+        $(this).closest('.second-column').find('.amount')[0].innerHTML=++amount;
+    });
+
+    $(document).on('click' , '.decrement', function(){
+        console.log($(this).closest('.second-column').find('.amount')[0]); 
+        let _amount= $(this).closest('.second-column').find('.amount')[0];
+        let amount = Number(_amount.innerHTML);
+        if(amount==1)
+            return;
+        $(this).closest('.second-column').find('.amount')[0].innerHTML=--amount;
+    });
 
       $(document).on('click' , '.button-buy', function(){
         let _id = $(this).data('product-id');
@@ -54,7 +68,6 @@ window.onload = function() {
     });
     
     $(document).on('click' , '.button-not-bought', function(){
-
         let _id = $(this).data('product-id');
         let _amount= $(this).closest('.item').find('.amount')[0].innerHTML;
         let _name = $(this).data('product-name');
@@ -63,9 +76,9 @@ window.onload = function() {
             <span class="title">${_name}</span>
         </div>
         <div class="second-column add-buttons">
-            <button class="circular-button red-button"><b>-</b></button>
+            <button class="decrement circular-button red-button"><b>-</b></button>
             <span class="amount">${_amount}</span>
-            <button class="circular-button green-button"><b>+</b></button>
+            <button class="increment circular-button green-button"><b>+</b></button>
         </div>
         <div class="third-column option-buttons">
             <button class="button-buy" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Куплено</button>
@@ -77,7 +90,6 @@ window.onload = function() {
         notBoughtItems.push({id:_id, amount:_amount, name:_name});
         RenderNotBoughtItems();
     });
-
 
     function RenderNotBoughtItems(){
           
