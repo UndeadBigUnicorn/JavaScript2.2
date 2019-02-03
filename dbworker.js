@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const productScheme = new Schema({name: String, amount:{type: Number, default: 1}}, {versionKey: false});
 const Product = mongoose.model("Product", productScheme);
 
@@ -18,7 +19,6 @@ module.exports.saveToDb = (_name)=>{
 module.exports.getAllFromDb = ()=>{
     Product.find((err,doc)=> {
         if(err)  return console.log(err);
-        console.log(doc);
         return doc;
    });
 };

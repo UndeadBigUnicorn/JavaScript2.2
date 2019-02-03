@@ -9,20 +9,28 @@ window.onload = function() {
 
     $("#add-button").on( "click", function() {
         let productName = document.getElementById('input').value;
-        //Айди будет из базы данных
-        let _id = 2;
-        let _amount = 1;
-        productList.push({id: _id, amount: _amount, name: productName});
-        RenderProductList();
-
-        notBoughtItems.push({id:_id,name: productName, amount: 1});
-        RenderNotBoughtItems();
-
-        document.getElementById('input').value='';
-      });
+        $.post({
+			url: "/addProduct",
+			contentType: "application/json",
+			data: JSON.stringify({name:productName}),
+			success: function (response) {
+                let _id = response.id;
+                let _amount = response.amount;
+                let _name = response.name;
+                productList.push({id: _id, name: _name, amount: _amount});
+                RenderProductList();
+        
+                notBoughtItems.push({id:_id,name: _name, amount: _amount});
+                RenderNotBoughtItems();
+        
+                document.getElementById('input').value='';
+			   }
+		});    
+    });
 
     $(document).on('click' , '.increment', function(){
         let _id = $(this).data('product-id');
+        console.log(_id)
         let _amount= $(this).closest('.second-column').find('.amount')[0];
         let amount = Number(_amount.innerHTML);
         $(this).closest('.second-column').find('.amount')[0].innerHTML=++amount;
@@ -56,7 +64,7 @@ window.onload = function() {
             <button class="button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено</button>
         </div>`;
         
-        notBoughtItems = notBoughtItems.filter(item => item.name!=_name);
+        notBoughtItems = notBoughtItems.filter(item => item._id!=_id);
         RenderNotBoughtItems();
         boughtItems.push({id:_id, amount:_amount, name:_name});
         RenderBoughtItems();
@@ -80,7 +88,7 @@ window.onload = function() {
             <button class="delete-button" data-product-name="${_name}" data-product-id="${_id}">X</button>
         </div>`;
         
-        boughtItems = boughtItems.filter(item => item.name!=_name);
+        boughtItems = boughtItems.filter(item => item._id!=_id);
         RenderBoughtItems();
         notBoughtItems.push({id:_id, amount:_amount, name:_name});
         RenderNotBoughtItems();
@@ -88,9 +96,9 @@ window.onload = function() {
 
     $(document).on('click' , '.delete-button', function(){
         let _id = $(this).data('product-id');      
-        notBoughtItems = notBoughtItems.filter(item => item.id!=_id);
+        notBoughtItems = notBoughtItems.filter(item => item._id!=_id);
         RenderNotBoughtItems();
-        productList = productList.filter(item => item.id!=_id);
+        productList = productList.filter(item => item._id!=_id);
         RenderProductList();
     });
 
@@ -125,13 +133,13 @@ window.onload = function() {
                   <span class="title">${item.name}</span>
               </div>
               <div class="second-column add-buttons">
-                  <button class="decrement circular-button red-button" data-product-id="${item.id}"><b>-</b></button>
+                  <button class="decrement circular-button red-button" data-product-id="${item._id}"><b>-</b></button>
                   <span class="amount">${item.amount}</span>
-                  <button class="increment circular-button green-button" data-product-id="${item.id}"><b>+</b></button>
+                  <button class="increment circular-button green-button" data-product-id="${item._id}"><b>+</b></button>
               </div>
               <div class="third-column option-buttons">
-                  <button class="button-buy" data-product-name="${item.name}" data-product-id="${item.id}" data-product-amount="${item.amount}">Куплено</button>
-                  <button class="delete-button" data-product-name="${item.name}" data-product-id="${item.id}">X</button>
+                  <button class="button-buy" data-product-name="${item.name}" data-product-id="${item._id}" data-product-amount="${item.amount}">Куплено</button>
+                  <button class="delete-button" data-product-name="${item.name}" data-product-id="${item._id}">X</button>
               </div>
               </div>`);
           });
@@ -141,7 +149,7 @@ window.onload = function() {
 
     function GetElementPos(_array, _id){
         for(let i =0; i<_array.length;i++){
-            if(Number(_array[i].id)==Number(_id))
+            if(_array[i]._id==_id)
                 return i;
         }
     }
@@ -152,8 +160,14 @@ window.onload = function() {
 			contentType: "application/json",
 			data: '',
 			success: function (response) {
+                if(response.length==0)
+                    return;
                 productList=response;
+                productList.forEach(element => {
+                    notBoughtItems.push(element);
+                });
                 RenderProductList();
+                RenderNotBoughtItems();
 			   }
 		});
     }
