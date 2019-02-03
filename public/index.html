@@ -3,17 +3,18 @@
 <head lang="uk">
     <meta charset="UTF-8">
     <title>Shopping cart</title>
-
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="index.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 <body>
     <div class="container column-height">
         <div class="left column-height column-background">
             <div class="input">
-                <input class="input-text" placeholder="Назва товару">
-                <button class="button">Додати</button>
+                <input id="input" class="input-text" placeholder="Назва товару">
+                <button id="add-button" class="button">Додати</button>
             </div>
+            <div id="items-container">
             <div class="item">
                 <div class="first-column titles">
                     <span class="title">Помідори</span>
@@ -53,6 +54,7 @@
                     <button class="button-buy button-not-bought">Не куплено</button>
                 </div>
             </div>
+            </div>
          
         </div>
         <div class="right column-height column-background">
@@ -60,7 +62,7 @@
                 <h3>Залишилося</h3>
             </div>
             <div class="item empty">
-                <div class="not-bought">
+                <div id="not-bought-items-container" class="not-bought">
                         <span class="product-item">
                                 Помідори
                                 <span class="circular-amount">1</span>
