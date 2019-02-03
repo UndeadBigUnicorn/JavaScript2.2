@@ -3,26 +3,17 @@ window.onload = function() {
     const itemsContainer = document.getElementById('items-container');
     const notBoughtItemsContainer = document.getElementById('not-bought-items-container');
     const boughtItemsContainer = document.getElementById('bought-items-container');
+    let productList = [];
     let notBoughtItems = [];
     let boughtItems = [];
 
     $("#add-button").on( "click", function() {
         let productName = document.getElementById('input').value;
+        //Айди будет из базы данных
         let _id = 2;
-        itemsContainer.innerHTML+= ` <div class="item">
-        <div class="first-column titles">
-            <span class="title">${productName}</span>
-        </div>
-        <div class="second-column add-buttons">
-            <button class="decrement circular-button red-button" data-product-id="${_id}"><b>-</b></button>
-            <span class="amount">1</span>
-            <button class="increment circular-button green-button" data-product-id="${_id}"><b>+</b></button>
-        </div>
-        <div class="third-column option-buttons">
-            <button class="button-buy" data-product-name="${productName}" data-product-id="" data-product-amount="1">Куплено</button>
-            <button class="delete-button" data-product-name="${productName}" data-product-id="">X</button>
-        </div>
-        </div>`;
+        let _amount = 1;
+        productList.push({id: _id, amount: _amount, name: productName});
+        RenderProductList();
 
         notBoughtItems.push({id:_id,name: productName, amount: 1});
         RenderNotBoughtItems();
@@ -95,6 +86,14 @@ window.onload = function() {
         RenderNotBoughtItems();
     });
 
+    $(document).on('click' , '.delete-button', function(){
+        let _id = $(this).data('product-id');      
+        notBoughtItems = notBoughtItems.filter(item => item.id!=_id);
+        RenderNotBoughtItems();
+        productList = productList.filter(item => item.id!=_id);
+        RenderProductList();
+    });
+
     function RenderNotBoughtItems(){
           
         let displayNotBoughtItems = notBoughtItems.map((item)=>{
@@ -117,6 +116,27 @@ window.onload = function() {
           });
 
         boughtItemsContainer.innerHTML=displayBoughtItems.join(' ');  
+    }
+
+    function RenderProductList(){
+        let displayItems = productList.map((item)=>{
+              return (` <div class="item">
+              <div class="first-column titles">
+                  <span class="title">${item.name}</span>
+              </div>
+              <div class="second-column add-buttons">
+                  <button class="decrement circular-button red-button" data-product-id="${item.id}"><b>-</b></button>
+                  <span class="amount">${item.amount}</span>
+                  <button class="increment circular-button green-button" data-product-id="${item.id}"><b>+</b></button>
+              </div>
+              <div class="third-column option-buttons">
+                  <button class="button-buy" data-product-name="${item.name}" data-product-id="${item.id}" data-product-amount="${item.amount}">Куплено</button>
+                  <button class="delete-button" data-product-name="${item.name}" data-product-id="${item.id}">X</button>
+              </div>
+              </div>`);
+          });
+
+        itemsContainer.innerHTML=displayItems.join(' ');  
     }
 
     function GetElementPos(_array, _id){
