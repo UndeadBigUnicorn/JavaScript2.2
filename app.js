@@ -13,5 +13,28 @@ app.get('/', (req,res)=>{
 });
 
 app.get('/allProducts', (req,res)=>{
-    
+    let products = db.getAllFromDb();
+    console.log(products)
+    res.send(products);
+});
+
+app.post('/addProduct', jsonParser, (req,res)=>{
+    if(!req.body) return res.sendStatus(400);
+
+    let name = req.body.name;
+    let result = db.saveToDb(name);
+    console.log(result);
+    res.send(result);
 })
+
+app.delete('/deleteProduct', jsonParser, (req,res)=>{
+    if(!req.body) return res.sendStatus(400);
+
+    let id = req.body.id;
+    db.deleteFromDb(id);
+    res.send("Success");
+})
+
+app.listen(port, ()=>{
+    console.log("Server is running");
+});
