@@ -8,15 +8,15 @@ window.onload = function() {
 
     $("#add-button").on( "click", function() {
         let productName = document.getElementById('input').value;
-
+        let _id = 2;
         itemsContainer.innerHTML+= ` <div class="item">
         <div class="first-column titles">
             <span class="title">${productName}</span>
         </div>
         <div class="second-column add-buttons">
-            <button class="decrement circular-button red-button"><b>-</b></button>
+            <button class="decrement circular-button red-button" data-product-id="${_id}"><b>-</b></button>
             <span class="amount">1</span>
-            <button class="increment circular-button green-button"><b>+</b></button>
+            <button class="increment circular-button green-button" data-product-id="${_id}"><b>+</b></button>
         </div>
         <div class="third-column option-buttons">
             <button class="button-buy" data-product-name="${productName}" data-product-id="" data-product-amount="1">Куплено</button>
@@ -24,26 +24,30 @@ window.onload = function() {
         </div>
         </div>`;
 
-        notBoughtItems.push({name: productName, amount: 1});
+        notBoughtItems.push({id:_id,name: productName, amount: 1});
         RenderNotBoughtItems();
 
         document.getElementById('input').value='';
       });
 
-      $(document).on('click' , '.increment', function(){
-        console.log($(this).closest('.second-column').find('.amount')[0]); 
+    $(document).on('click' , '.increment', function(){
+        let _id = $(this).data('product-id');
         let _amount= $(this).closest('.second-column').find('.amount')[0];
         let amount = Number(_amount.innerHTML);
         $(this).closest('.second-column').find('.amount')[0].innerHTML=++amount;
+        notBoughtItems[GetElementPos(notBoughtItems, _id)].amount = amount;
+        RenderNotBoughtItems();
     });
 
     $(document).on('click' , '.decrement', function(){
-        console.log($(this).closest('.second-column').find('.amount')[0]); 
+        let _id = $(this).data('product-id');
         let _amount= $(this).closest('.second-column').find('.amount')[0];
         let amount = Number(_amount.innerHTML);
         if(amount==1)
             return;
         $(this).closest('.second-column').find('.amount')[0].innerHTML=--amount;
+        notBoughtItems[GetElementPos(notBoughtItems, _id)].amount = amount;
+        RenderNotBoughtItems();
     });
 
       $(document).on('click' , '.button-buy', function(){
@@ -76,9 +80,9 @@ window.onload = function() {
             <span class="title">${_name}</span>
         </div>
         <div class="second-column add-buttons">
-            <button class="decrement circular-button red-button"><b>-</b></button>
+            <button class="decrement circular-button red-button" data-product-id="${_id}"><b>-</b></button>
             <span class="amount">${_amount}</span>
-            <button class="increment circular-button green-button"><b>+</b></button>
+            <button class="increment circular-button green-button" data-product-id="${_id}"><b>+</b></button>
         </div>
         <div class="third-column option-buttons">
             <button class="button-buy" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Куплено</button>
@@ -113,6 +117,13 @@ window.onload = function() {
           });
 
         boughtItemsContainer.innerHTML=displayBoughtItems.join(' ');  
+    }
+
+    function GetElementPos(_array, _id){
+        for(let i =0; i<_array.length;i++){
+            if(Number(_array[i].id)==Number(_id))
+                return i;
+        }
     }
 
 }
