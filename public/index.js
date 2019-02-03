@@ -6,7 +6,7 @@ window.onload = function() {
     const notBoughtItems = [];
     const boughtItems = [];
 
-    $( "#add-button" ).on( "click", function() {
+    $("#add-button").on( "click", function() {
         let productName = document.getElementById('input').value;
 
         itemsContainer.innerHTML+= ` <div class="item">
@@ -19,8 +19,8 @@ window.onload = function() {
             <button class="circular-button green-button"><b>+</b></button>
         </div>
         <div class="third-column option-buttons">
-            <button class="button-buy" data-poduct-name="${productName}" data-product-id="" data-product-amount="1">Куплено</button>
-            <button class="delete-button" data-poduct-name="${productName}" data-product-id="">X</button>
+            <button class="button-buy" data-product-name="${productName}" data-product-id="" data-product-amount="1">Куплено</button>
+            <button class="delete-button" data-product-name="${productName}" data-product-id="">X</button>
         </div>
     </div>`;
 
@@ -45,14 +45,18 @@ window.onload = function() {
       $(document).on('click' , '.button-buy', function(){
         // Еще нужно добалять в список купленых товаров и с кнопоками разобраться
         let _id = $(this).data('product-id');
-        let _amount= $(this).data('product-amount');
-        let _name = $(this).data('product-rate');
-        let title = $(this).closest('.titles');
-        let addButtons = $(this).closest('.add-buttons');
-        let optionButtons = $(this).closest('.option-buttons');
-        title.innerHTML= `<span class="title crossed">${_name}</span>`;
-        addButtons.innerHTML= ` <span class="amount">${_amount}</span>`;
-        optionButtons.innerHTML = `<button class="button-buy button-not-bought">Не куплено</button>`;
-        
+        let _amount= $(this).closest('.item').find('.amount')[0].innerHTML;
+        let _name = $(this).data('product-name');
+        $(this).closest('.item')[0].innerHTML=`<div class="item">
+        <div class="first-column titles">
+            <span class="title crossed">${_name}</span>
+        </div>
+        <div class="second-column add-buttons">                   
+            <span class="amount">${_amount}</span>
+        </div>
+        <div class="third-column option-buttons">
+            <button class="button-buy button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено</button>
+        </div>
+    </div>`;
     });
 }
