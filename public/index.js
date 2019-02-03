@@ -29,8 +29,8 @@ window.onload = function() {
     });
 
     $(document).on('click' , '.increment', function(){
+        //Проверить когда добавляешь новый продукт, кидает ошибки при добавлении
         let _id = $(this).data('product-id');
-        console.log(_id)
         let _amount= $(this).closest('.second-column').find('.amount')[0];
         let amount = Number(_amount.innerHTML);
         $(this).closest('.second-column').find('.amount')[0].innerHTML=++amount;
@@ -95,11 +95,19 @@ window.onload = function() {
     });
 
     $(document).on('click' , '.delete-button', function(){
-        let _id = $(this).data('product-id');      
-        notBoughtItems = notBoughtItems.filter(item => item._id!=_id);
-        RenderNotBoughtItems();
-        productList = productList.filter(item => item._id!=_id);
-        RenderProductList();
+        let _id = $(this).data('product-id');     
+        $.ajax({
+            url: "/deleteProduct",
+            method: "DELETE",
+			contentType: "application/json",
+			data: JSON.stringify({id:_id}),
+			success: function (response) {
+                notBoughtItems = notBoughtItems.filter(item => item._id!=_id);
+                RenderNotBoughtItems();
+                productList = productList.filter(item => item._id!=_id);
+                RenderProductList();
+			}
+		}); 
     });
 
     function RenderNotBoughtItems(){
