@@ -246,3 +246,41 @@ h3{
 .crossed{
     text-decoration: line-through;
 }
+
+.badge{
+    position: fixed;
+    bottom: 0;
+    width: 200px;
+    height: 110px;
+    left: 5%;
+    background-color: purple;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 1em;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+    transform: translateY(95px); 
+    transition:	all	1s	ease;
+}
+
+.badge:hover{
+    background-color: #6D10FF;
+    transform: translateY(0px); 
+}
+
+.hiden-badge{
+    margin-top: 22px;
+}
+
+.author{
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 24px;
+}
+
+.text{
+    font-weight: normal;
+    font-size: 20px;
+}
