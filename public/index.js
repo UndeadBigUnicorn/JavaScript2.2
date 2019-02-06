@@ -110,6 +110,23 @@ window.onload = function() {
 		}); 
     });
 
+    $(document).on('click' , '.title', function(){
+        let element = $(this)[0];
+        let name = element.innerHTML;     
+        let input= $(this).closest('.item').find('.input-text')[0];
+        element.style.display = "none";
+        input.style.display = "inline-block";
+        input.value = name;
+        window.onclick = (event)=>{
+            if (event.target != element && event.target!= input) {
+                let newName = input.value;
+                input.style.display = "none";
+                element.style.display = "inline";
+                element.innerHTML = newName;
+        }
+    }
+    });
+
     function RenderNotBoughtItems(){
           
         let displayNotBoughtItems = notBoughtItems.map((item)=>{
