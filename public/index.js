@@ -76,7 +76,8 @@ window.onload = function() {
         let _name = $(this).data('product-name');
         $(this).closest('.item')[0].innerHTML= `
         <div class="first-column titles">
-            <span class="title">${_name}</span>
+            <span class="title" data-product-id="${item._id}">${_name}</span>
+            <input class="input-text hiden" placeholder="Нова назва">
         </div>
         <div class="second-column add-buttons">
             <button class="decrement circular-button red-button" data-product-id="${_id}"><b>-</b></button>
@@ -112,6 +113,7 @@ window.onload = function() {
 
     $(document).on('click' , '.title', function(){
         let element = $(this)[0];
+        let _id = $(this).data('product-id');
         let name = element.innerHTML;     
         let input= $(this).closest('.item').find('.input-text')[0];
         element.style.display = "none";
@@ -123,6 +125,8 @@ window.onload = function() {
                 input.style.display = "none";
                 element.style.display = "inline";
                 element.innerHTML = newName;
+                notBoughtItems[GetElementPos(notBoughtItems, _id)].name = newName;
+                RenderNotBoughtItems();
         }
     }
     });
@@ -155,7 +159,8 @@ window.onload = function() {
         let displayItems = productList.map((item)=>{
               return (` <div class="item">
               <div class="first-column titles">
-                  <span class="title">${item.name}</span>
+                  <span class="title" data-product-id="${item._id}">${item.name}</span>
+                  <input class="input-text hiden" placeholder="Нова назва">
               </div>
               <div class="second-column add-buttons">
                   <button class="decrement circular-button red-button" data-product-id="${item._id}"><b>-</b></button>
