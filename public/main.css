@@ -15,6 +15,19 @@ body{
     padding: 15px;
     float: right;
 }
+
+@media only screen and (max-width:	1020px)	{
+.media{
+    width: 100%!important;
+    margin: 0!important;
+    padding: 1rem!important;
+}
+.right{
+    margin-top: 1rem!important;
+    float: left;
+} 
+}
+
 .left{
     padding: 15px;
     width: 65%;
@@ -265,9 +278,30 @@ h3{
     transition:	all	1s	ease;
 }
 
+.print{
+    display: none;
+    font-weight: normal;
+    font-size: 24px;
+}
+
 .badge:hover{
     background-color: #6D10FF;
     transform: translateY(0px); 
+}
+
+@media print{
+    .badge{
+        border: 3px solid purple;
+        background-color: white;
+        color: black;
+    }
+    .badge-title{
+        display: none;
+    }
+    .print{
+        display: inline;
+        
+    }
 }
 
 .hiden-badge{
