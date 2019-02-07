@@ -29,13 +29,13 @@ window.onload = function() {
     });
 
     $(document).on('click' , '.increment', function(){
-        //Проверить когда добавляешь новый продукт, кидает ошибки при добавлении
         let _id = $(this).data('product-id');
         let _amount= $(this).closest('.second-column').find('.amount')[0];
         let amount = Number(_amount.innerHTML);
         $(this).closest('.second-column').find('.amount')[0].innerHTML=++amount;
         notBoughtItems[GetElementPos(notBoughtItems, _id)].amount = amount;
         RenderNotBoughtItems();
+        UpdateAmount(_id, amount);
     });
 
     $(document).on('click' , '.decrement', function(){
@@ -47,6 +47,7 @@ window.onload = function() {
         $(this).closest('.second-column').find('.amount')[0].innerHTML=--amount;
         notBoughtItems[GetElementPos(notBoughtItems, _id)].amount = amount;
         RenderNotBoughtItems();
+        UpdateAmount(_id, amount);
     });
 
       $(document).on('click' , '.button-buy', function(){
@@ -68,6 +69,7 @@ window.onload = function() {
         RenderNotBoughtItems();
         boughtItems.push({_id:_id, amount:_amount, name:_name});
         RenderBoughtItems();
+        UpdateStatus(_id, true);
     });
     
     $(document).on('click' , '.button-not-bought', function(){
@@ -93,6 +95,7 @@ window.onload = function() {
         RenderBoughtItems();
         notBoughtItems.push({_id:_id, amount:_amount, name:_name});
         RenderNotBoughtItems();
+        UpdateStatus(_id, false);
     });
 
     $(document).on('click' , '.delete-button', function(){
@@ -125,8 +128,7 @@ window.onload = function() {
                 input.style.display = "none";
                 element.style.display = "inline";
                 element.innerHTML = newName;
-                notBoughtItems[GetElementPos(notBoughtItems, _id)].name = newName;
-                RenderNotBoughtItems();
+                UpdateName(_id, newName);            
         }
     }
     });
@@ -157,6 +159,7 @@ window.onload = function() {
 
     function RenderProductList(){
         let displayItems = productList.map((item)=>{
+            if(!item.bought){
               return (` <div class="item">
               <div class="first-column titles">
                   <span class="title" data-product-id="${item._id}">${item.name}</span>
@@ -172,7 +175,22 @@ window.onload = function() {
               <button class="delete-button" data-product-name="${item.name}" data-product-id="${item._id}" data-tooltip="Видалити">X<span class="tooltip" data-tooltip="Видалити">Видалити</span></button>
               </div>
               </div>`);
+            }
+            else{
+                return(` <div class="item">
+                <div class="first-column titles">
+                <span class="title crossed">${item.name}</span>
+            </div>
+            <div class="second-column add-buttons">                   
+                <span class="amount">${item.amount}</span>
+            </div>
+            <div class="third-column option-buttons">
+                <button class="button-not-bought" data-product-name="${item.name}" data-product-id="${item._id}" data-product-amount="${item.amount}">Не куплено<span class="tooltip" data-tooltip="Відмітити як не куплене">Відмітити як не куплене</span></button>
+            </div>
+            </div>`)
+            }
           });
+        
 
         itemsContainer.innerHTML=displayItems.join(' ');  
     }
@@ -182,6 +200,41 @@ window.onload = function() {
             if(_array[i]._id==_id)
                 return i;
         }
+    }
+
+    function UpdateName(_id, newName){
+        $.ajax({
+            url: "/updateName",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({id:_id, name: newName}),
+            success: function (response) {
+                notBoughtItems[GetElementPos(notBoughtItems, _id)].name = newName;
+                RenderNotBoughtItems();
+            }
+        }); 
+    }
+
+    function UpdateAmount(_id, newAmount){
+        $.ajax({
+            url: "/updateAmount",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({id:_id, amount: newAmount}),
+            success: function (response) {
+            }
+        }); 
+    }
+
+    function UpdateStatus(_id, newStatus){
+        $.ajax({
+            url: "/updateStatus",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({id:_id, status: newStatus}),
+            success: function (response) {
+            }
+        }); 
     }
 
     function GetProductList(){
@@ -194,10 +247,14 @@ window.onload = function() {
                     return;
                 productList=response;
                 productList.forEach(element => {
-                    notBoughtItems.push(element);
+                    if(element.bought)
+                        boughtItems.push(element);
+                    else
+                        notBoughtItems.push(element);
                 });
                 RenderProductList();
                 RenderNotBoughtItems();
+                RenderBoughtItems();
 			   }
 		});
     }

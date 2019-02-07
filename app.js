@@ -37,6 +37,36 @@ app.post('/addProduct', jsonParser, (req,res)=>{
         res.send(data);
     });
     
+});
+
+app.put('/updateName', jsonParser, (req,res)=>{
+    if(!req.body) return res.sendStatus(400);
+
+    let _id = req.body.id;
+    let newName = req.body.name;
+    db.updateNameDb(_id, newName, ()=>{
+        res.send("Success");
+    });
+});
+
+app.put('/updateAmount', jsonParser, (req,res)=>{
+    if(!req.body) return res.sendStatus(400);
+
+    let _id = req.body.id;
+    let newAmount = req.body.amount;
+    db.updateAmountDb(_id, newAmount, ()=>{
+        res.send("Success");
+    });
+})
+
+app.put('/updateStatus', jsonParser, (req,res)=>{
+    if(!req.body) return res.sendStatus(400);
+
+    let _id = req.body.id;
+    let newStatus = req.body.status;
+    db.updateStatusDb(_id, newStatus, ()=>{
+        res.send("Success");
+    });
 })
 
 app.delete('/deleteProduct', jsonParser, (req,res)=>{
@@ -47,7 +77,7 @@ app.delete('/deleteProduct', jsonParser, (req,res)=>{
         res.send("Success");
     });
     
-})
+});
 
 app.listen(PORT, ()=>{
     console.log("Server is running");
