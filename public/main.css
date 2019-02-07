@@ -322,3 +322,21 @@ h3{
 .hiden{
     display: none;
 }
+
+.tooltip{
+        visibility: hidden;
+        width: 120px;
+        background-color: purple;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        transform: translateX(-85px) translateY(-40px);
+        z-index: 1;
+}
+
+button:hover .tooltip{
+    visibility: visible;
+    content: attr(data-tooltip);
+  }

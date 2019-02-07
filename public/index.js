@@ -61,7 +61,7 @@ window.onload = function() {
             <span class="amount">${_amount}</span>
         </div>
         <div class="third-column option-buttons">
-            <button class="button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено</button>
+            <button class="button-not-bought" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Не куплено<span class="tooltip" data-tooltip="Відмітити як не куплене">Відмітити як не куплене</span></button>
         </div>`;
         
         notBoughtItems = notBoughtItems.filter(item => item._id!=_id);
@@ -76,17 +76,17 @@ window.onload = function() {
         let _name = $(this).data('product-name');
         $(this).closest('.item')[0].innerHTML= `
         <div class="first-column titles">
-            <span class="title" data-product-id="${item._id}">${_name}</span>
+            <span class="title" data-product-id="${_id}">${_name}</span>
             <input class="input-text hiden" placeholder="Нова назва">
         </div>
         <div class="second-column add-buttons">
-            <button class="decrement circular-button red-button" data-product-id="${_id}"><b>-</b></button>
+            <button class="decrement circular-button red-button" data-tooltip="Відняти одну одиницю" data-product-id="${_id}"><b>-</b><span class="tooltip" data-tooltip="Відняти одну одиницю">Відняти одну одиницю</span></button>
             <span class="amount">${_amount}</span>
-            <button class="increment circular-button green-button" data-product-id="${_id}"><b>+</b></button>
+            <button class="increment circular-button green-button" data-tooltip="Додати одну одиницю" data-product-id="${_id}"><b>+</b><span class="tooltip" data-tooltip="Додати одну одиницю">Додати одну одиницю</span></button>
         </div>
         <div class="third-column option-buttons">
-            <button class="button-buy" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Куплено</button>
-            <button class="delete-button" data-product-name="${_name}" data-product-id="${_id}">X</button>
+        <button class="button-buy" data-product-name="${_name}" data-tooltip="Відмітити як куплене" data-product-name="${_name}" data-product-id="${_id}" data-product-amount="${_amount}">Куплено<span class="tooltip" data-tooltip="Відмітити як куплене">Відмітити як куплене</span></button>
+        <button class="delete-button" data-product-name="${_name}" data-product-id="${_id}" data-tooltip="Видалити">X<span class="tooltip" data-tooltip="Видалити">Видалити</span></button>
         </div>`;
         
         boughtItems = boughtItems.filter(item => item._id!=_id);
@@ -163,13 +163,13 @@ window.onload = function() {
                   <input class="input-text hiden" placeholder="Нова назва">
               </div>
               <div class="second-column add-buttons">
-                  <button class="decrement circular-button red-button" data-product-id="${item._id}"><b>-</b></button>
-                  <span class="amount">${item.amount}</span>
-                  <button class="increment circular-button green-button" data-product-id="${item._id}"><b>+</b></button>
+              <button class="decrement circular-button red-button" data-tooltip="Відняти одну одиницю" data-product-id="${item._id}"><b>-</b><span class="tooltip" data-tooltip="Відняти одну одиницю">Відняти одну одиницю</span></button>
+              <span class="amount">${item.amount}</span>
+              <button class="increment circular-button green-button" data-tooltip="Додати одну одиницю" data-product-id="${item._id}"><b>+</b><span class="tooltip" data-tooltip="Додати одну одиницю">Додати одну одиницю</span></button>   
               </div>
               <div class="third-column option-buttons">
-                  <button class="button-buy" data-product-name="${item.name}" data-product-id="${item._id}" data-product-amount="${item.amount}">Куплено</button>
-                  <button class="delete-button" data-product-name="${item.name}" data-product-id="${item._id}">X</button>
+              <button class="button-buy" data-product-name="${item.name}" data-tooltip="Відмітити як куплене" data-product-name="${item.name}" data-product-id="${item._id}" data-product-amount="${item.amount}">Куплено<span class="tooltip" data-tooltip="Відмітити як куплене">Відмітити як куплене</span></button>
+              <button class="delete-button" data-product-name="${item.name}" data-product-id="${item._id}" data-tooltip="Видалити">X<span class="tooltip" data-tooltip="Видалити">Видалити</span></button>
               </div>
               </div>`);
           });

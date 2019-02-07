@@ -12,7 +12,7 @@
         <div class="left column-height column-background media">
             <div class="input">
                 <input id="input" class="input-text" placeholder="Назва товару">
-                <button id="add-button" class="button">Додати</button>
+                <button id="add-button" class="button" data-tooltip="Додати в список">Додати<span class="tooltip" data-tooltip="Додати в список">Додати в список</span></button>
             </div>
             <div id="items-container">
             <div class="item">
@@ -21,13 +21,13 @@
                     <input class="input-text hiden" placeholder="Нова назва" >
                 </div>
                 <div class="second-column add-buttons">
-                        button class="decrement circular-button red-button" data-product-id="2"><b>-</b></button>
+                        <button class="decrement circular-button red-button" data-tooltip="Відняти одну одиницю" data-product-id="2"><b>-</b><span class="tooltip" data-tooltip="Відняти одну одиницю">Відняти одну одиницю</span></button>
                         <span class="amount">1</span>
-                        <button class="increment circular-button green-button" data-product-id="2"><b>+</b></button>
+                        <button class="increment circular-button green-button" data-tooltip="Додати одну одиницю" data-product-id="2"><b>+</b><span class="tooltip" data-tooltip="Додати одну одиницю">Додати одну одиницю</span></button>
                 </div>
                 <div class="third-column option-buttons">
-                    <button class="button-buy" data-product-name="Помідори" data-product-id="" data-product-amount="1">Куплено</button>
-                    <button class="delete-button">X</button>
+                    <button class="button-buy" data-product-name="Помідори" data-tooltip="Відмітити як куплене" data-product-id="" data-product-amount="1">Куплено<span class="tooltip" data-tooltip="Відмітити як куплене">Відмітити як куплене</span></button>
+                    <button class="delete-button" data-tooltip="Видалити">X<span class="tooltip" data-tooltip="Видалити">Видалити</span></button>
                 </div>
             </div>
             <div class="item">
