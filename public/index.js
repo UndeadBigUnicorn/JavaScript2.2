@@ -116,6 +116,8 @@ window.onload = function() {
 
     $(document).on('click' , '.title', function(){
         let element = $(this)[0];
+	if(element.className.endsWith('crossed'))
+            return;
         let _id = $(this).data('product-id');
         let name = element.innerHTML;     
         let input= $(this).closest('.item').find('.input-text')[0];
